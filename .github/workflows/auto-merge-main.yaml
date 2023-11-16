@@ -45,14 +45,13 @@ jobs:
           echo "checkout done"
           git branch "$GITHUB_HEAD_REF-auto-merge-error"
           echo "create branch done"
-          env BASE_BRANCH="$GITHUB_HEAD_REF"
-          echo "base branch is $BASE_BRANCH"
           cd .github/src
           echo "cd done"
           npm install
           echo "npm install done"
           node create_staging_release_pr.js
         env:
+          BASE_BRANCH: ${{ github.head_ref }}
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
