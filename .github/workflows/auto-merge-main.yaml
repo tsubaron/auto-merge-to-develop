@@ -10,10 +10,14 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Auto merge
         run: |
-          echo "The branch name is $GITHUB_BASE_REF"
+          echo "The branch name is $GITHUB_HEAD_REF"
           git checkout develop
-          git merge $GITHUB_BASE_REF --no-ff --no-edit
+          git merge $GITHUB_HEAD_REF --no-ff --no-edit
           git push origin develop
-          
+
