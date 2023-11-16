@@ -40,18 +40,20 @@ jobs:
           echo "Error handling"
           echo ${{ steps.error_execution.outcome }}
           git reset --hard
-          echo "reset done"
-          git checkout "origin/$GITHUB_HEAD_REF"
-          echo "checkout done"
+          echo "git reset done"
+          git checkout -b "origin/$GITHUB_HEAD_REF"
+          echo "git checkout done"
           git branch "$GITHUB_HEAD_REF-auto-merge-error"
           echo "create branch done"
+          git push origin "$GITHUB_HEAD_REF-auto-merge-error"
           cd .github/src
-          echo "cd done"
+          echo "cd .github/src done"
           npm install
           echo "npm install done"
           node create_staging_release_pr.js
+          echo "create_staging_release_pr.js done"
         env:
-          BASE_BRANCH: ${{ github.head_ref }}
+          BASE_BRANCH: ${{ github.head_ref }}-auto-merge-error
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
