@@ -16,15 +16,13 @@ jobs:
           ref: main
       - name: Get commit author info
         run: |
-          AUTHOR_NAME=$(git log -1 --pretty=format:'%an')
-          AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')
-          echo "Commit Author: $AUTHOR_NAME"
-          echo "Commit Author Email: $AUTHOR_EMAIL"
-          git config user.name AUTHOR_NAME
-          git config user.email AUTHOR_EMAIL
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - name: Auto merge
         continue-on-error: true
         id: error_execution
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "The branch name is $GITHUB_HEAD_REF"
           git fetch
