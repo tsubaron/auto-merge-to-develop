@@ -25,9 +25,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "The branch name is $GITHUB_HEAD_REF"
-          git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git
-          echo "remote add done"
-          git fetch
+          git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          echo "remote add done"          git fetch
           echo "fetch done"
           git checkout develop
           echo "checkout develop done"
