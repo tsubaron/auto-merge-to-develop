@@ -54,7 +54,7 @@ jobs:
           node create_staging_release_pr.js
           echo "create_staging_release_pr.js done"
         env:
-          BASE_BRANCH: ${{ github.head_ref }}-auto-merge-error
+          HEAD_BRANCH: ${{ github.head_ref }}-auto-merge-error
           RELEASE_BRANCH: ${{ github.head_ref }}
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
