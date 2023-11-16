@@ -40,7 +40,12 @@ jobs:
         run: |
           echo "Error handling"
           echo ${{ steps.error_execution.outcome }}
-          node .github/src/create_staging_release_pr.js
+          git checkout "origin/$GITHUB_HEAD_REF"
+          git create-branch "$GITHUB_HEAD_REF-auto-merge-error"
+          BASE_BRANCH="$GITHUB_HEAD_REF"
+          cd .github/src
+          npm install
+          node create_staging_release_pr.js
         env:
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}

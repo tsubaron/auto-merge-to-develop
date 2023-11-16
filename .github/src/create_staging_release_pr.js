@@ -3,7 +3,7 @@ const github = require("@actions/github");
 const fs = require("fs");
 
 const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
-const BASE_BRANCH = process.env["GITHUB_HEAD_REF"];
+const BASE_BRANCH = process.env["BASE_BRANCH"];
 const HEAD_BRANCH = "develop";
 const OWNER = process.env["OWNER"];
 const REPO = process.env["REPO"];
@@ -25,3 +25,30 @@ function formatDate(date) {
   const day = date.getDate();
   return `${year}/${month}/${day}`;
 }
+
+async function createPullRequest(title, body) {
+  const octokit = github.getOctokit(GITHUB_TOKEN);
+  const requestBody = {
+    owner: OWNER,
+    repo: REPO,
+    title: title,
+    body: body,
+    head: HEAD_BRANCH,
+    base: BASE_BRANCH,
+    headers: {
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+  };
+  const response = await octokit.request(
+    `POST /repos/${OWNER}/${REPO}/pulls`,
+    requestBody
+  );
+  return response;
+}
+
+const fileContent = fs.readFileSync(TEMPLATE_FILE_NAME, "utf-8");
+const description = Mustache.render(fileContent);
+createPullRequest(TITLE, description).then((response) => {
+  console.log("Request to create PR: #", response.data.number);
+});
+core.setOutput("Done!");
