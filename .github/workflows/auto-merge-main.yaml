@@ -13,8 +13,10 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: $GITHUB_HEAD_REF
       - name: Auto merge
+        continue-on-error: true
+        id: error_execution
         run: |
           echo "The branch name is $GITHUB_HEAD_REF"
           git fetch
@@ -25,4 +27,17 @@ jobs:
           echo "merge done"
           git push origin develop
           echo "push done"
+      - name: Create Pull Request on Error
+        if: ${{ steps.error_execution.outcome == 'failure' }}
+        run: |
+          echo "Error handling"
+          echo ${{ steps.error_execution.outcome }}
+          node .github/src/create_staging_release_pr.js
+        env:
+          GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: ${{ GITHUB_HEAD_REF }}
+          HEAD_BRANCH: develop
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          TEMPLATE: ".github/git-pr-release.template"
 
