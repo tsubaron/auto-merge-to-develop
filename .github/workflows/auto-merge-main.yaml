@@ -2,7 +2,7 @@ name: Auto merge to develop
 
 on:
   pull_request:
-    branches: ["release/**", "hotfix/**"]
+    branches: main
     types: [closed]
 
 jobs:
@@ -13,6 +13,3 @@ jobs:
       - name: Auto merge
         run: |
           echo "The branch name is $GITHUB_REF"
-          git checkout develop
-          git merge $GITHUB_REF --no-ff --no-edit
-          git push origin develop
