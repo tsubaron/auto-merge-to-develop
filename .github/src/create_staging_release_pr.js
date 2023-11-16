@@ -1,6 +1,5 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const Mustache = require("mustache");
 const fs = require("fs");
 
 const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
