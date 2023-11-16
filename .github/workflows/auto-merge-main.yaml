@@ -35,8 +35,6 @@ jobs:
           node .github/src/create_staging_release_pr.js
         env:
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
-          BASE_BRANCH: ${{ GITHUB_HEAD_REF }}
-          HEAD_BRANCH: develop
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
           TEMPLATE: ".github/git-pr-release.template"

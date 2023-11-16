@@ -4,8 +4,8 @@ const Mustache = require("mustache");
 const fs = require("fs");
 
 const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
-const BASE_BRANCH = process.env["BASE_BRANCH"];
-const HEAD_BRANCH = process.env["HEAD_BRANCH"];
+const BASE_BRANCH = process.env["GITHUB_HEAD_REF"];
+const HEAD_BRANCH = "develop";
 const OWNER = process.env["OWNER"];
 const REPO = process.env["REPO"];
 const TEMPLATE_FILE_NAME = process.env["TEMPLATE"];
