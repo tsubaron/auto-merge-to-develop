@@ -42,6 +42,7 @@ jobs:
         run: |
           echo "Error handling"
           echo ${{ steps.error_execution.outcome }}
+          git reset --hard
           git checkout "origin/$GITHUB_HEAD_REF"
           git create-branch "$GITHUB_HEAD_REF-auto-merge-error"
           BASE_BRANCH="$GITHUB_HEAD_REF"
