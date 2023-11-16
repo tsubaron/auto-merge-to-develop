@@ -9,6 +9,17 @@ jobs:
   auto-merge:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
+      issues: write
+      packages: write
+      pull-requests: write
+      repository-projects: write
+      security-events: write
+      statuses: write
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v2
@@ -25,8 +36,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "The branch name is $GITHUB_HEAD_REF"
-          git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          echo "remote add done"          git fetch
+
+
+          git fetch
           echo "fetch done"
           git checkout develop
           echo "checkout develop done"
