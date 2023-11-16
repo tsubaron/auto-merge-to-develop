@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const Mustache = require("mustache");
 const fs = require("fs");
 
 const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
@@ -47,7 +48,10 @@ async function createPullRequest(title, body) {
 }
 
 const fileContent = fs.readFileSync(TEMPLATE_FILE_NAME, "utf-8");
-const description = Mustache.render(fileContent);
+const description = Mustache.render(fileContent, {
+  base_branch: BASE_BRANCH,
+  head_branch: HEAD_BRANCH,
+});
 createPullRequest(TITLE, description).then((response) => {
   console.log("Request to create PR: #", response.data.number);
 });
