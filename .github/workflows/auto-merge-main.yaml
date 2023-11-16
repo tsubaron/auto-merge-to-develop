@@ -9,17 +9,7 @@ jobs:
   auto-merge:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
-      issues: write
-      packages: write
-      pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
+
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v2
