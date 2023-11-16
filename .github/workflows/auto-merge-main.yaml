@@ -41,8 +41,11 @@ jobs:
           echo "Error handling"
           echo ${{ steps.error_execution.outcome }}
           git reset --hard
+          echo "reset done"
           git checkout "origin/$GITHUB_HEAD_REF"
-          git create-branch "$GITHUB_HEAD_REF-auto-merge-error"
+          echo "checkout done"
+          git branch "$GITHUB_HEAD_REF-auto-merge-error"
+          echo "create branch done"
           BASE_BRANCH="$GITHUB_HEAD_REF"
           cd .github/src
           npm install
