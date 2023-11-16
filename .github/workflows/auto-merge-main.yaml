@@ -25,31 +25,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "The branch name is $GITHUB_HEAD_REF"
+          echo "git fetch"
           git fetch
-          echo "fetch done"
+          echo "git checkout develop"
           git checkout develop
-          echo "checkout develop done"
+          echo "git merge "origin/$GITHUB_HEAD_REF" --no-ff --no-edit"
           git merge "origin/$GITHUB_HEAD_REF" --no-ff --no-edit
-          echo "merge done"
+          echo "git push origin develop"
           git push origin develop
-          echo "push done"
       - name: Create Pull Request on Error
         if: ${{ steps.error_execution.outcome == 'failure' }}
         run: |
           echo "Error handling"
           echo ${{ steps.error_execution.outcome }}
+          echo "::group::git reset --hard"
           git reset --hard
-          echo "git reset done"
-          git checkout -b "origin/$GITHUB_HEAD_REF"
-          echo "git checkout done"
+          echo "git checkout -b $GITHUB_HEAD_REF "origin/$GITHUB_HEAD_REF""
+          git checkout -b $GITHUB_HEAD_REF "origin/$GITHUB_HEAD_REF"
+          echo "git branch $GITHUB_HEAD_REF-auto-merge-error"
           git branch "$GITHUB_HEAD_REF-auto-merge-error"
-          echo "create branch done"
+          echo "git push origin $GITHUB_HEAD_REF-auto-merge-error"
           git push origin "$GITHUB_HEAD_REF-auto-merge-error"
+          echo "cd .github/src"
           cd .github/src
-          echo "cd .github/src done"
+          echo "npm install"
           npm install
-          echo "npm install done"
+          echo "::endgroup::"
           node create_staging_release_pr.js
           echo "create_staging_release_pr.js done"
         env:
