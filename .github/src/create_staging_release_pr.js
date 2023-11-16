@@ -4,8 +4,9 @@ const Mustache = require("mustache");
 const fs = require("fs");
 
 const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
-const BASE_BRANCH = process.env["BASE_BRANCH"];
-const HEAD_BRANCH = "develop";
+const BASE_BRANCH = "develop";
+const HEAD_BRANCH = process.env["HEAD_BRANCH"];
+const RELEASE_BRANCH = process.env["RELEASE_BRANCH"];
 const OWNER = process.env["OWNER"];
 const REPO = process.env["REPO"];
 const TEMPLATE_FILE_NAME = process.env["TEMPLATE"];
@@ -51,6 +52,7 @@ const fileContent = fs.readFileSync(TEMPLATE_FILE_NAME, "utf-8");
 const description = Mustache.render(fileContent, {
   base_branch: BASE_BRANCH,
   head_branch: HEAD_BRANCH,
+  release_branch: RELEASE_BRANCH,
 });
 createPullRequest(TITLE, description).then((response) => {
   console.log("Request to create PR: #", response.data.number);
