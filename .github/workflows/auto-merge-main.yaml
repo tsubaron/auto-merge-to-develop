@@ -21,7 +21,7 @@ jobs:
           echo "fetch done"
           git checkout develop
           echo "checkout develop done"
-          git merge $GITHUB_HEAD_REF --no-ff --no-edit
+          git merge $GITHUB_HEAD_REF --no-ff --no-edit --verbose
           echo "merge done"
           git push origin develop
           echo "push done"
