@@ -1,4 +1,4 @@
-name: Auto merge to develop
+name: Auto merge to develop branch
 
 on:
   pull_request:
