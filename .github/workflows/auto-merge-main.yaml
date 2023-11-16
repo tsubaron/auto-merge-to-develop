@@ -13,7 +13,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
         with:
-          ref: $GITHUB_HEAD_REF
+          ref: main
       - name: Auto merge
         continue-on-error: true
         id: error_execution
@@ -23,7 +23,7 @@ jobs:
           echo "fetch done"
           git checkout develop
           echo "checkout develop done"
-          git merge $GITHUB_HEAD_REF --no-ff --no-edit
+          git merge "origin/$GITHUB_HEAD_REF" --no-ff --no-edit
           echo "merge done"
           git push origin develop
           echo "push done"
