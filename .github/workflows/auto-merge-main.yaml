@@ -36,16 +36,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "The branch name is $GITHUB_HEAD_REF"
-
-
           git fetch
           echo "fetch done"
           git checkout develop
           echo "checkout develop done"
           git merge "origin/$GITHUB_HEAD_REF" --no-ff --no-edit
           echo "merge done"
-          git commit
-          echo "commit done"
           git push origin develop
           echo "push done"
       - name: Create Pull Request on Error
