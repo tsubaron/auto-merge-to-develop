@@ -10,7 +10,7 @@ const RELEASE_BRANCH = process.env["RELEASE_BRANCH"];
 const OWNER = process.env["OWNER"];
 const REPO = process.env["REPO"];
 const TEMPLATE_FILE_NAME = process.env["TEMPLATE"];
-const TITLE = BASE_BRANCH + " to develop " + formatDate(new Date());
+const TITLE = `${HEAD_BRANCH} to ${BASE_BRANCH} ` + formatDate(new Date());
 
 // Debug outputs
 console.log("GITHUB_TOKEN: ", GITHUB_TOKEN);
