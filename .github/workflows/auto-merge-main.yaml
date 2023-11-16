@@ -56,5 +56,5 @@ jobs:
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-          TEMPLATE: ${{GITHUB_WORKSPACE}}"/.github/git-pr-release.template"
+          TEMPLATE: ${{ github.workspace }}/.github/git-pr-release.template
 
