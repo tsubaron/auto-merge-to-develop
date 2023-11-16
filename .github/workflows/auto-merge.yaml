@@ -15,4 +15,3 @@ jobs:
           git checkout develop
           git merge $GITHUB_REF --no-ff --no-edit
           git push origin develop
-```
