@@ -45,7 +45,7 @@ jobs:
           echo "checkout done"
           git branch "$GITHUB_HEAD_REF-auto-merge-error"
           echo "create branch done"
-          BASE_BRANCH="$GITHUB_HEAD_REF"
+          env BASE_BRANCH="$GITHUB_HEAD_REF"
           echo "base branch is $BASE_BRANCH"
           cd .github/src
           echo "cd done"
@@ -56,5 +56,5 @@ jobs:
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-          TEMPLATE: ".github/git-pr-release.template"
+          TEMPLATE: ${{GITHUB_WORKSPACE}}"/.github/git-pr-release.template"
 
