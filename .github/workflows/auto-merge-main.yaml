@@ -18,7 +18,11 @@ jobs:
         run: |
           echo "The branch name is $GITHUB_HEAD_REF"
           git fetch
+          echo "fetch done"
           git checkout develop
+          echo "checkout develop done"
           git merge $GITHUB_HEAD_REF --no-ff --no-edit
+          echo "merge done"
           git push origin develop
+          echo "push done"
 
