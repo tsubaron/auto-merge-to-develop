@@ -1,1 +1,2 @@
-# test
+# explain
+mainブランチにマージ時に、github-actionsで自動的にdevelopにマージするためのワークフローを定義したリポジトリです。
