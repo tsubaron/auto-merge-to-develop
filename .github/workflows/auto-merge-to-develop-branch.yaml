@@ -9,65 +9,14 @@ jobs:
   auto-merge:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
-      id-token: write
-      issues: write
-      discussions: write
-      packages: write
-      pages: write
-      pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
+
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get commit author info
+      - name: Create Pull Request
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - name: Auto merge
-        continue-on-error: true
-        id: error_execution
-        run: |
-          echo "git fetch"
-          git fetch
-          echo "git checkout develop"
-          git checkout develop
-          echo "git merge "origin/$GITHUB_HEAD_REF" --no-ff --no-edit"
-          git merge "origin/$GITHUB_HEAD_REF" --no-ff --no-edit
-          echo "git push origin develop"
-          git push origin develop
-      - name: Create Pull Request on Error
-        if: ${{ steps.error_execution.outcome == 'failure' }}
-        run: |
-          echo "Error handling"
-          echo ${{ steps.error_execution.outcome }}
-          echo "::group::git reset --hard"
-          git reset --hard
-          echo "git checkout -b $GITHUB_HEAD_REF "origin/$GITHUB_HEAD_REF""
-          git checkout -b $GITHUB_HEAD_REF "origin/$GITHUB_HEAD_REF"
-          echo "git branch $GITHUB_HEAD_REF-auto-merge-error"
-          git branch "$GITHUB_HEAD_REF-auto-merge-error"
-          echo "git push origin $GITHUB_HEAD_REF-auto-merge-error"
-          git push origin "$GITHUB_HEAD_REF-auto-merge-error"
-          echo "cd .github/src"
-          cd .github/src
-          echo "npm install"
-          npm install
-          echo "::endgroup::"
+          echo "create_staging_release_pr.js start"
           node create_staging_release_pr.js
-          echo "create_staging_release_pr.js done"
         env:
-          HEAD_BRANCH: ${{ github.head_ref }}-auto-merge-error
-          RELEASE_BRANCH: ${{ github.head_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
